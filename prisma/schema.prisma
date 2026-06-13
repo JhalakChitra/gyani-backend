@@ -8,19 +8,44 @@ datasource db {
 }
 
 model User {
-  id                String   @id @default(uuid())
+  id String @id @default(uuid())
 
-  fullName          String
-  email             String   @unique
-  password          String
+  fullName String
+  email    String @unique
+  password String
 
-  refreshToken      String?
+  refreshToken String?
 
-  resetToken        String?
-  resetTokenExpiry  DateTime?
+  resetToken       String?
+  resetTokenExpiry DateTime?
 
-  isActive          Boolean  @default(true)
+  isActive Boolean @default(true)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  companies Company[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id String @id @default(uuid())
+
+  companyName String
+  email       String?
+  mobile      String?
+
+  gstNumber String?
+  panNumber String?
+  tanNumber String?
+
+  address String?
+  city    String?
+  state   String?
+  pincode String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
